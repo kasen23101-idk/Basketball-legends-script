@@ -1,92 +1,169 @@
--- Services
-local a,b,c,d,e=game:GetService("TweenService"),game:GetService("UserInputService"),game:GetService("Players"),game:GetService("RunService"),game:GetService("Stats")
+-- Main Hub
+local m=Instance.new("ScreenGui");m.Name="BLH";m.Parent=game.CoreGui;m.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
+local n=Instance.new("Frame",m);n.BackgroundColor3=Color3.fromRGB(25,25,35);n.BorderSizePixel=0;n.Position=UDim2.new(0.5,-225,0.5,-200);n.Size=UDim2.new(0,450,0,400);n.ClipsDescendants=true;n.Active=true;n.Draggable=true
+Instance.new("UICorner",n).CornerRadius=UDim.new(0,12)
+local o=Instance.new("UIStroke",n);o.Color=Color3.fromRGB(100,50,255);o.Thickness=2;o.Transparency=0.5
 
--- Loader GUI
-local f=Instance.new("ScreenGui")
-f.Name="IL";f.Parent=game.CoreGui;f.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
-local g=Instance.new("Frame",f);g.BackgroundColor3=Color3.fromRGB(30,30,45);g.BorderSizePixel=0;g.Position=UDim2.new(0.5,-125,0.5,-75);g.Size=UDim2.new(0,250,0,150)
-Instance.new("UICorner",g).CornerRadius=UDim.new(0,15)
-local h=Instance.new("UIStroke",g);h.Color=Color3.fromRGB(100,50,255);h.Thickness=3
-local i=Instance.new("TextLabel",g);i.BackgroundTransparency=1;i.Position=UDim2.new(0,0,0,10);i.Size=UDim2.new(1,0,0,40);i.Font=Enum.Font.GothamBold;i.Text="🏀 Basketball Legends";i.TextColor3=Color3.fromRGB(255,255,255);i.TextSize=20
-local j=Instance.new("TextLabel",g);j.BackgroundTransparency=1;j.Position=UDim2.new(0,0,0,45);j.Size=UDim2.new(1,0,0,25);j.Font=Enum.Font.Gotham;j.Text="Script Hub";j.TextColor3=Color3.fromRGB(200,200,200);j.TextSize=14
-local k=Instance.new("TextButton",g);k.BackgroundColor3=Color3.fromRGB(100,50,255);k.BorderSizePixel=0;k.Position=UDim2.new(0.5,-100,0.5,10);k.Size=UDim2.new(0,200,0,50);k.Font=Enum.Font.GothamBold;k.Text="🚀 Load Script";k.TextColor3=Color3.fromRGB(255,255,255);k.TextSize=18;k.AutoButtonColor=false
-Instance.new("UICorner",k).CornerRadius=UDim.new(0,10)
+-- Title
+local title=Instance.new("TextLabel",n)
+title.Size=UDim2.new(1,0,0,50)
+title.BackgroundTransparency=1
+title.Text="🏀 Basketball Legends Hub"
+title.Font=Enum.Font.GothamBold
+title.TextSize=20
+title.TextColor3=Color3.fromRGB(255,255,255)
 
--- Hover effect
-k.MouseEnter:Connect(function() a:Create(k,TweenInfo.new(0.2),{BackgroundColor3=Color3.fromRGB(120,70,255),Size=UDim2.new(0,210,0,55)}):Play() end)
-k.MouseLeave:Connect(function() a:Create(k,TweenInfo.new(0.2),{BackgroundColor3=Color3.fromRGB(100,50,255),Size=UDim2.new(0,200,0,50)}):Play() end)
+-- Tabs Bar
+local tabBar=Instance.new("Frame",n)
+tabBar.Position=UDim2.new(0,0,0,50)
+tabBar.Size=UDim2.new(1,0,0,40)
+tabBar.BackgroundColor3=Color3.fromRGB(30,30,45)
+Instance.new("UICorner",tabBar).CornerRadius=UDim.new(0,8)
 
--- Open animation
-g.Size=UDim2.new(0,0,0,0);g.Position=UDim2.new(0.5,0,0.5,0)
-a:Create(g,TweenInfo.new(0.5,Enum.EasingStyle.Back),{Size=UDim2.new(0,250,0,150),Position=UDim2.new(0.5,-125,0.5,-75)}):Play()
+local function makeTab(txt,pos)
+    local b=Instance.new("TextButton",tabBar)
+    b.Size=UDim2.new(0.33,0,1,0)
+    b.Position=UDim2.new(pos,0,0,0)
+    b.Text=txt
+    b.Font=Enum.Font.GothamBold
+    b.TextSize=14
+    b.TextColor3=Color3.fromRGB(255,255,255)
+    b.BackgroundColor3=Color3.fromRGB(100,50,255)
+    Instance.new("UICorner",b).CornerRadius=UDim.new(0,6)
+    return b
+end
 
--- Load Button
-k.MouseButton1Click:Connect(function()
-    k.Text="⏳ Loading...";k.BackgroundColor3=Color3.fromRGB(70,40,180)
-    wait(0.5)
-    a:Create(g,TweenInfo.new(0.3),{Size=UDim2.new(0,0,0,0),Position=UDim2.new(0.5,0,0.5,0)}):Play()
-    wait(0.3);f:Destroy()
+local homeTab=makeTab("Home",0)
+local creditsTab=makeTab("Credits",0.33)
+local discordTab=makeTab("Discord",0.66)
 
-    -- Main Hub
-    local m=Instance.new("ScreenGui");m.Name="BLH";m.Parent=game.CoreGui;m.ZIndexBehavior=Enum.ZIndexBehavior.Sibling
-    local n=Instance.new("Frame",m);n.BackgroundColor3=Color3.fromRGB(25,25,35);n.BorderSizePixel=0;n.Position=UDim2.new(0.5,-225,0.5,-200);n.Size=UDim2.new(0,450,0,400);n.ClipsDescendants=true;n.Active=true;n.Draggable=true
-    Instance.new("UICorner",n).CornerRadius=UDim.new(0,12)
-    local o=Instance.new("UIStroke",n);o.Color=Color3.fromRGB(100,50,255);o.Thickness=2;o.Transparency=0.5
+-- Pages
+local function makePage()
+    local p=Instance.new("Frame",n)
+    p.Position=UDim2.new(0,0,0,90)
+    p.Size=UDim2.new(1,0,1,-90)
+    p.BackgroundTransparency=1
+    p.Visible=false
+    return p
+end
 
-    local p=Instance.new("Frame",m);p.BackgroundColor3=Color3.fromRGB(35,35,50);p.BorderSizePixel=0;p.Position=UDim2.new(1,-220,0,10);p.Size=UDim2.new(0,210,0,100);p.Visible=false
-    Instance.new("UICorner",p).CornerRadius=UDim.new(0,10)
-    local q=Instance.new("UIStroke",p);q.Color=Color3.fromRGB(100,255,100);q.Thickness=2
-    local r=Instance.new("TextLabel",p);r.BackgroundTransparency=1;r.Position=UDim2.new(0,10,0,5);r.Size=UDim2.new(1,-20,0,25);r.Font=Enum.Font.GothamBold;r.Text="🎯 AUTO GREEN ACTIVE";r.TextColor3=Color3.fromRGB(100,255,100);r.TextSize=14;r.TextXAlignment=Enum.TextXAlignment.Left
-    local s=Instance.new("TextLabel",p);s.BackgroundTransparency=1;s.Position=UDim2.new(0,10,0,30);s.Size=UDim2.new(1,-20,0,20);s.Font=Enum.Font.Gotham;s.Text="Status: Waiting for ball...";s.TextColor3=Color3.fromRGB(200,200,200);s.TextSize=12;s.TextXAlignment=Enum.TextXAlignment.Left
-    local t=Instance.new("TextLabel",p);t.BackgroundTransparency=1;t.Position=UDim2.new(0,10,0,50);t.Size=UDim2.new(1,-20,0,20);t.Font=Enum.Font.Gotham;t.Text="Ping: 0ms";t.TextColor3=Color3.fromRGB(200,200,200);t.TextSize=12;t.TextXAlignment=Enum.TextXAlignment.Left
-    local u=Instance.new("TextLabel",p);u.BackgroundTransparency=1;u.Position=UDim2.new(0,10,0,70);u.Size=UDim2.new(1,-20,0,20);u.Font=Enum.Font.Gotham;u.Text="Timing: 45ms (Adjusted)";u.TextColor3=Color3.fromRGB(200,200,200);u.TextSize=12;u.TextXAlignment=Enum.TextXAlignment.Left
+local homePage=makePage()
+local creditsPage=makePage()
+local discordPage=makePage()
+homePage.Visible=true
 
-    -- FPS Counter
-    local v,w=0,tick()
-    d.RenderStepped:Connect(function()
-        v=v+1;local x=tick()
-        if x-w>=1 then
-            local y=v/(x-w)
-            r.Text="FPS: "..math.floor(y)
-            if y>=60 then r.TextColor3=Color3.fromRGB(100,255,100)
-            elseif y>=30 then r.TextColor3=Color3.fromRGB(255,255,100)
-            else r.TextColor3=Color3.fromRGB(255,100,100) end
-            v=0;w=x
-        end
-    end)
+-- TAB SWITCHING
+local function show(pg)
+    homePage.Visible=false
+    creditsPage.Visible=false
+    discordPage.Visible=false
+    pg.Visible=true
+end
+homeTab.MouseButton1Click:Connect(function() show(homePage) end)
+creditsTab.MouseButton1Click:Connect(function() show(creditsPage) end)
+discordTab.MouseButton1Click:Connect(function() show(discordPage) end)
 
-    -- Auto Green logic
-    local z=false
-    b.InputBegan:Connect(function(input,processed)
-        if processed then return end
-        if input.KeyCode==Enum.KeyCode.E and z then
-            local ply=c.LocalPlayer
-            local bar
-            pcall(function() bar=ply.PlayerGui.Visual.Shooting.Bar end)
-            if bar then
-                p.Visible=true;s.Text="Status: Shooting...";s.TextColor3=Color3.fromRGB(100,255,100)
-                while b:IsKeyDown(Enum.KeyCode.E) and z do
-                    pcall(function()
-                        local baseTiming=0.045
-                        local pingAdj=0
-                        bar:TweenSize(UDim2.new(1,0,1,0),Enum.EasingDirection.Out,Enum.EasingStyle.Linear,baseTiming+pingAdj,true)
-                        task.wait()
-                        bar.Size=UDim2.new(1,0,1,0)
-                    end)
+-- AUTO GREEN LOGIC (Original)
+local autoGreen=false
+local players=game:GetService("Players")
+local uis=game:GetService("UserInputService")
+local runService=game:GetService("RunService")
+
+-- Auto Green Frame
+local agFrame=Instance.new("Frame",homePage)
+agFrame.BackgroundColor3=Color3.fromRGB(35,35,50)
+agFrame.BorderSizePixel=0
+agFrame.Position=UDim2.new(0.02,0,0.15,0)
+agFrame.Size=UDim2.new(0.96,0,0.5,0)
+Instance.new("UICorner",agFrame).CornerRadius=UDim.new(0,10)
+
+local statusLabel=Instance.new("TextLabel",agFrame)
+statusLabel.BackgroundTransparency=1
+statusLabel.Position=UDim2.new(0,10,0,10)
+statusLabel.Size=UDim2.new(1,-20,0,25)
+statusLabel.Font=Enum.Font.Gotham
+statusLabel.Text="Status: Waiting for ball..."
+statusLabel.TextColor3=Color3.fromRGB(200,200,200)
+statusLabel.TextSize=14
+statusLabel.TextXAlignment=Enum.TextXAlignment.Left
+
+local agBtn=Instance.new("TextButton",homePage)
+agBtn.Text="🎯 Auto Green: OFF"
+agBtn.Position=UDim2.new(0.02,0,0.02,0)
+agBtn.Size=UDim2.new(0.96,0,0,50)
+agBtn.BackgroundColor3=Color3.fromRGB(100,50,255)
+agBtn.TextColor3=Color3.fromRGB(255,255,255)
+agBtn.Font=Enum.Font.GothamBold
+agBtn.TextSize=16
+Instance.new("UICorner",agBtn).CornerRadius=UDim.new(0,10)
+
+agBtn.MouseButton1Click:Connect(function()
+    autoGreen=not autoGreen
+    if autoGreen then
+        agBtn.Text="🎯 Auto Green: ON"
+        agFrame.Visible=true
+    else
+        agBtn.Text="🎯 Auto Green: OFF"
+        agFrame.Visible=false
+    end
+end)
+
+-- Key press detection for Auto Green
+uis.InputBegan:Connect(function(input,processed)
+    if processed then return end
+    if input.KeyCode==Enum.KeyCode.E and autoGreen then
+        local player=players.LocalPlayer
+        local bar
+        pcall(function() bar=player.PlayerGui.Visual.Shooting.Bar end)
+        if bar then
+            statusLabel.Text="Status: Shooting..."
+            statusLabel.TextColor3=Color3.fromRGB(100,255,100)
+            while uis:IsKeyDown(Enum.KeyCode.E) and autoGreen do
+                pcall(function()
+                    local baseTiming=0.045
+                    local pingAdj=0
+                    bar:TweenSize(UDim2.new(1,0,1,0),Enum.EasingDirection.Out,Enum.EasingStyle.Linear,baseTiming+pingAdj,true)
                     task.wait()
-                end
-                s.Text="Status: Waiting for ball...";s.TextColor3=Color3.fromRGB(200,200,200)
-            else
-                s.Text="Status: No basketball!";s.TextColor3=Color3.fromRGB(255,100,100)
-                task.wait(1);s.Text="Status: Waiting for ball...";s.TextColor3=Color3.fromRGB(200,200,200)
+                    bar.Size=UDim2.new(1,0,1,0)
+                end)
+                task.wait()
             end
+            statusLabel.Text="Status: Waiting for ball..."
+            statusLabel.TextColor3=Color3.fromRGB(200,200,200)
+        else
+            statusLabel.Text="Status: No basketball!"
+            statusLabel.TextColor3=Color3.fromRGB(255,100,100)
+            task.wait(1)
+            statusLabel.Text="Status: Waiting for ball..."
+            statusLabel.TextColor3=Color3.fromRGB(200,200,200)
         end
-    end)
+    end
+end)
 
-    -- Toggle Auto Green Button
-    local agBtn=Instance.new("TextButton",n);agBtn.Text="🎯 Auto Green: OFF";agBtn.Position=UDim2.new(0,10,0,10);agBtn.Size=UDim2.new(1,-20,0,50);Instance.new("UICorner",agBtn).CornerRadius=UDim.new(0,10)
-    agBtn.MouseButton1Click:Connect(function()
-        z=not z
-        if z then agBtn.Text="🎯 Auto Green: ON";p.Visible=true else agBtn.Text="🎯 Auto Green: OFF";p.Visible=false end
-    end)
+-- Credits Page
+local credLabel=Instance.new("TextLabel",creditsPage)
+credLabel.Size=UDim2.new(1,0,0,100)
+credLabel.Position=UDim2.new(0,0,0,20)
+credLabel.BackgroundTransparency=1
+credLabel.Text="⭐ Script Hub\n\nMade by kasen102399"
+credLabel.Font=Enum.Font.GothamBold
+credLabel.TextSize=18
+credLabel.TextColor3=Color3.fromRGB(255,255,255)
+
+-- Discord Page
+local discBtn=Instance.new("TextButton",discordPage)
+discBtn.Size=UDim2.new(0.8,0,0,50)
+discBtn.Position=UDim2.new(0.1,0,0,30)
+discBtn.Text="Join Discord Server"
+discBtn.Font=Enum.Font.GothamBold
+discBtn.TextSize=16
+discBtn.BackgroundColor3=Color3.fromRGB(88,101,242)
+discBtn.TextColor3=Color3.fromRGB(255,255,255)
+Instance.new("UICorner",discBtn).CornerRadius=UDim.new(0,10)
+
+discBtn.MouseButton1Click:Connect(function()
+    setclipboard("https://discord.gg/uV5SXunr")
+    discBtn.Text="Copied Invite Link!"
+    wait(2)
+    discBtn.Text="Join Discord Server"
 end)
