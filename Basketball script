@@ -944,7 +944,7 @@ LoadButton.MouseButton1Click:Connect(function()
     end)
 
     DiscordButton.MouseButton1Click:Connect(function()
-        setclipboard("https://discord.gg/Q2BCA68G")
+        setclipboard("https://discord.gg/BdKERBt6")
         sendNotification("📋 Copied!", "Discord link copied to clipboard", 3)
         DiscordButton.Text = "✅ Copied to Clipboard!"
         wait(2)
