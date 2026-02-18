@@ -1,1 +1,1 @@
-loadstring(game:HttpGet("https://github.com/kasen23101-idk/Basketball-legends-script/edit/main/Basketball%20script"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/kasen23101-idk/Basketball-legends-script/main/Basketball%20script"))()
